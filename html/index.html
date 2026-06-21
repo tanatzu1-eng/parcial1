@@ -84,7 +84,7 @@
 
 
 
-        <section class="grid grid-cols-12">
+        <section class="grid grid-cols-12 my-20">
 
             <button
             id="boton-database-completa"
@@ -92,14 +92,38 @@
             class="
                 bg-red-900 col-start-3 col-span-3 p-5 texto m-2 text-2xl shadow-xl shadow-black
                 hover:bg-red-800 hover:shadow-2xl
-                lg:text-4xl">
-            obtener database</button>
+                lg:text-4xl lg:col-start-2 lg:col-span-2
+                md:col-start-2 md:col-span-2
+                sm:col-start-2 sm:col-span-3">
+            Obtener Database</button>
 
             <div
             id="contenedor-database-completa"
             class="bg-slate-800 col-start-7 col-span-5"></div>
 
         </section>
+
+
+
+        <section class="grid grid-cols-12 my-20">
+
+            <button
+            id="boton-database-producto"
+            onclick="ObtenerArticulos()"
+            class="
+                bg-red-900 col-start-3 col-span-3 p-5 texto m-2 text-2xl shadow-xl shadow-black
+                hover:bg-red-800 hover:shadow-2xl
+                lg:text-4xl lg:col-start-2 lg:col-span-2
+                md:col-start-2 md:col-span-2
+                sm:col-start-2 sm:col-span-3">
+            Obtener Producto</button>
+
+            <div
+            id="contenedor-database-completa"
+            class="bg-slate-800 col-start-7 col-span-5"></div>
+
+        </section>
+
     </main>
 
     <script src="main.js"></script>
