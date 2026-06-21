@@ -80,47 +80,36 @@
 
     <main>
 
-        <h1 class="text-center pt-10 text-4xl titulo mt-10 mb-20">Titulo de la pagina</h1>
+        <h1 class="text-center py-10 text-4xl titulo mt-10 mb-20">API's de mierda</h1>
 
 
 
-        <section class="grid grid-cols-12 my-20">
+        <!-- API obtener database/item por id-->
+        <section class="grid grid-cols-11 my-20 grid-rows-3 gap-10">
 
+            <!-- input de database completa -->
             <button
             id="boton-database-completa"
             onclick="ObtenerArticulos()"
             class="
-                bg-red-900 col-start-3 col-span-3 p-5 texto m-2 text-2xl shadow-xl shadow-black
+                bg-red-900 col-start-4 col-span-5 p-5 texto text-2xl shadow-xl shadow-black
                 hover:bg-red-800 hover:shadow-2xl
-                lg:text-4xl lg:col-start-2 lg:col-span-2
-                md:col-start-2 md:col-span-2
-                sm:col-start-2 sm:col-span-3">
-            Obtener Database</button>
 
+                lg:text-4xl lg:col-start-3 lg:col-span-2
+                md:col-start-2 md:col-span-2 md:row-start-2
+                sm:col-start-5 sm:col-span-3">
+            Obtener Database
+            </button>
+
+            <!-- output de database completa/item por id -->
             <div
-            id="contenedor-database-completa"
-            class="bg-slate-800 col-start-7 col-span-5"></div>
+                id="contenedor-database-completa"
+                class="
+                    bg-slate-500 col-start-2 col-span-9 row-span-2
 
-        </section>
-
-
-
-        <section class="grid grid-cols-12 my-20">
-
-            <button
-            id="boton-database-producto"
-            onclick="ObtenerArticulos()"
-            class="
-                bg-red-900 col-start-3 col-span-3 p-5 texto m-2 text-2xl shadow-xl shadow-black
-                hover:bg-red-800 hover:shadow-2xl
-                lg:text-4xl lg:col-start-2 lg:col-span-2
-                md:col-start-2 md:col-span-2
-                sm:col-start-2 sm:col-span-3">
-            Obtener Producto</button>
-
-            <div
-            id="contenedor-database-completa"
-            class="bg-slate-800 col-start-7 col-span-5"></div>
+                    lg:col-start-5 lg:col-span-5
+                    md:col-start-4 md:col-span-7 md:row-span-3">
+            </div>
 
         </section>
 
