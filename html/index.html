@@ -17,6 +17,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bungee+Inline&family=Delicious+Handrawn&display=swap" rel="stylesheet">
 
+    <!-- ICONOS: -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=search" />
+
 </head>
 
 
@@ -42,9 +45,17 @@
         <div class="col-span-4 col-start-3">
             <input
             type="text"
-            class="bg-slate-500 p-2 w-full texto text-2xl"
+            class="bg-slate-500 p-2 w-full texto text-2xl rounded-lg"
             id="buscador"
             placeholder="Buscar...">
+        </div>
+
+        <div class="p-2 text-3xl">
+            <a href="#">
+                <span
+                class="material-symbols-outlined"
+                id="buscar-producto">search</span>
+            </a>
         </div>
 
     <!-- carrito de compras y perfil -->
@@ -90,7 +101,7 @@
             id="boton-database-completa"
             onclick="ObtenerArticulos()"
             class="
-                bg-red-900 p-5 texto m-2 text-2xl shadow-xl shadow-black
+                bg-red-900 p-5 texto m-2 text-2xl shadow-xl shadow-black rounded-lg
                 hover:bg-red-800 hover:shadow-2xl
 
                 col-start-5 col-span-3 row-start-1 row-span-2
