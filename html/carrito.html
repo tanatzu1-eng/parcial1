@@ -16,6 +16,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bungee+Inline&family=Delicious+Handrawn&display=swap" rel="stylesheet">
+    
+    <!-- ICONOS: -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=search" />
 
 </head>
 
@@ -23,14 +26,10 @@
 
 <body class="bg-slate-900 text-gray-50">
 
-    <header class="bg-slate-700 grid grid-cols-7 items-center p-2">
+    <header class="bg-slate-700 grid grid-cols-7 items-center p-2 shadow-md shadow-black">
 
     <!-- logo -->
-        <div class="
-                lg:size-15
-                md:size-15
-                sm:size-15
-                size-10">
+        <div class="size-10">
             <a href="index.html">
                 <img
                 src="../img/logo.webp"
@@ -44,7 +43,13 @@
             type="text"
             class="bg-slate-500 p-2 w-full texto text-2xl rounded-lg"
             id="buscador"
-            placeholder="Buscar...">
+            placeholder="Buscar por nombre...">
+        </div>
+
+        <div class="p-2 text-3xl" id="boton_buscar">
+            <a href="#">
+                <span class="material-symbols-outlined">search</span>
+            </a>
         </div>
 
     <!-- carrito de compras y perfil -->
@@ -53,11 +58,7 @@
                 <img
                 src="../img/carrito.webp"
                 alt="logo carrito de compras"
-                class="
-                    lg:size-15 lg:mx-5
-                    md:size-15
-                    sm:size-15
-                    size-10">
+                class="lg:mx-5 size-10">
             </a>
 
             <a
@@ -66,11 +67,7 @@
                 <img
                 src="../img/user-icon.webp"
                 alt="icono de usuario"
-                class="
-                    lg:size-15
-                    md:size-15
-                    sm:size-15
-                    size-10">
+                class="size-10">
             </a>
         </div>
 
