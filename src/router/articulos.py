@@ -1,60 +1,79 @@
-from typing import Annotated, Dict, List
-from fastapi import APIRouter, HTTPException, Path, Query, status
-from src.schemas.articulos import ArticuloBase, ArticuloRespuesta
+from typing import Annotated, List
+from fastapi import APIRouter, HTTPException, Path, Query
+from src.schemas.articulos import ArticuloUpdateSchema, ArticuloSchema, ID, TITULO, DESCRIPCION, PRECIO, DISPONIBLE, NOT_FOUND_RESPONSE
 
-router = APIRouter(prefix="/articulos", tags=["Artículos"])
-
-
-base_de_datos: Dict[int, dict] = {
-    1: {"id": 1, "titulo": "Teclado Mecánico RGB", "descripcion": "Switches red", "precio": 45.50},
-    2: {"id": 2, "titulo": "Mouse Inalámbrico", "descripcion": "Ergonómico", "precio": 25.00},
-    3: {"id": 3, "titulo": "Auriculares Gamer 7.1", "descripcion": "Con micrófono", "precio": 59.90}
-}
+router = APIRouter()
 
 
-@router.get("", response_model=List[ArticuloRespuesta])
-def obtener_articulos(
-    limite: Annotated[int, Query(ge=1, description="Límite de artículos a devolver")] = 10
-):
-    return list(base_de_datos.values())[:limite]
+base_de_datos = [
+    {"id": 1, "titulo": "Teclado Mecánico RGB", "descripcion": "Switches red", "precio": 45.50, "disponible": True},
+    {"id": 2, "titulo": "Mouse Inalámbrico", "descripcion": "Ergonómico", "precio": 25.00, "disponible": False},
+    {"id": 3, "titulo": "Auriculares Gamer 7.1", "descripcion": "Con micrófono", "precio": 59.90, "disponible": True},
+    {"id": 4, "titulo": "Gabinete", "descripcion": "Mid tower", "precio": 10000, "disponible": True},
+    {"id": 5, "titulo": "producto 5", "descripcion": "hola", "precio": 59.90, "disponible": True},
+    {"id": 6, "titulo": "producto 6", "descripcion": "hola", "precio": 59.90, "disponible": True},
+    {"id": 7, "titulo": "producto 7", "descripcion": "", "precio": 59.90, "disponible": True},
+    {"id": 8, "titulo": "producto 8", "descripcion": "", "precio": 59.90, "disponible": False},
+    {"id": 9, "titulo": "producto 9", "descripcion": "", "precio": 59.90, "disponible": True},
+    {"id": 10, "titulo": "producto 10", "descripcion": "", "precio": 59.90, "disponible": True},
+    {"id": 11, "titulo": "producto 11", "descripcion": "sin descripcion", "precio": 10000000000, "disponible": False},
+]
 
 
-@router.get("", response_model=ArticuloRespuesta, responses={404: {"description": "Artículo no encontrado"}})
-def obtener_articulo(
-    id_articulo: Annotated[int, Path(ge=1, description="El ID del artículo")]
-):
-    if id_articulo not in base_de_datos:
-        raise HTTPException(status_code=404, detail="Artículo no encontrado")
-    return base_de_datos[id_articulo]
+
+@router.get("/", response_model=List[ArticuloSchema])
+def obtener_articulos():
+    return base_de_datos
 
 
-@router.post("", response_model=ArticuloRespuesta, status_code=status.HTTP_201_CREATED)
-def crear_articulo(articulo: ArticuloBase):
-    nuevo_id = max(base_de_datos.keys(), default=0) + 1
-    nuevo_articulo = {"id": nuevo_id, **articulo.model_dump()}
-    base_de_datos[nuevo_id] = nuevo_articulo
-    return nuevo_articulo
+
+@router.get("/base_de_datos/{id}", response_model=ArticuloSchema, responses=NOT_FOUND_RESPONSE)
+def obtener_articulo(id: ID):
+
+    for articulo in base_de_datos:
+        if id == articulo["id"]:
+            return articulo
+
+    raise HTTPException(status_code=404)
 
 
-@router.put("", response_model=ArticuloRespuesta, responses={404: {"description": "Artículo no encontrado"}})
-def actualizar_articulo(
-    id_articulo: Annotated[int, Path(ge=1, description="El ID del artículo a actualizar")],
-    articulo: ArticuloBase
-):
-    if id_articulo not in base_de_datos:
-        raise HTTPException(status_code=404, detail="Artículo no encontrado")
+
+@router.post("/base_de_datos/{id}", response_model=ArticuloSchema, responses=NOT_FOUND_RESPONSE)
+def crear_articulo(articulo_nuevo: ArticuloSchema):
+
+    for articulo in base_de_datos:
+        if articulo["id"] == articulo_nuevo.id:
+            raise HTTPException(status_code=409)
+
+        if articulo["titulo"] == articulo_nuevo["titulo"]:
+            raise HTTPException(status_code=409)
+
+    base_de_datos.append(articulo_nuevo.model_dump())
+    return articulo_nuevo
+
+
+
+@router.put("/base_de_datos/{id}", response_model=ArticuloSchema, responses=NOT_FOUND_RESPONSE)
+def actualizar_articulo(id: ID, articulo_nuevo: ArticuloUpdateSchema):
+
+    for articulo in base_de_datos:
+        if id == articulo["id"]:
+            articulo = articulo_nuevo.model_dump()
+            return articulo
     
-    datos_actualizados = {"id": id_articulo, **articulo.model_dump()}
-    base_de_datos[id_articulo] = datos_actualizados
-    return datos_actualizados
+    raise HTTPException(status_code=404)
 
 
-@router.delete("", status_code=status.HTTP_204_NO_CONTENT, responses={404: {"description": "Artículo no encontrado"}})
-def eliminar_articulo(
-    id_articulo: Annotated[int, Path(ge=1, description="El ID del artículo a eliminar")]
-):
-    if id_articulo not in base_de_datos:
-        raise HTTPException(status_code=404, detail="Artículo no encontrado")
-    
-    del base_de_datos[id_articulo]
-    return None
+
+@router.delete("/base_de_datos/{id}", response_model=ArticuloSchema, responses=NOT_FOUND_RESPONSE)
+def eliminar_articulo(id: ID, logico: Annotated[bool, Query(description="NO borrar permanentemente?")]):
+
+    for articulo in base_de_datos:
+        if id == articulo["id"]:
+            if logico:
+                articulo["disponible"] = False
+            else:
+                base_de_datos.remove(articulo)
+            return articulo
+
+    raise HTTPException(status_code=404)

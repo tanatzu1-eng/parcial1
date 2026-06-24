@@ -3,10 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from src.router import articulos
 
 # Instanciar FastAPI y personalizar título
-app = FastAPI(
-    title="API de Artículos",
-    description="Trabajo Práctico Integrador - PP1 y FastAPI."
-)
+app = FastAPI()
 
 # Configurar CORS (Para conectar con Javascript)
 app.add_middleware(
