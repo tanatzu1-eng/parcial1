@@ -17,20 +17,19 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bungee+Inline&family=Delicious+Handrawn&display=swap" rel="stylesheet">
 
+    <!-- ICONOS: -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=search" />
+
 </head>
 
 
 
 <body class="bg-slate-900 text-gray-50">
 
-    <header class="bg-slate-700 grid grid-cols-7 items-center p-2">
+    <header class="bg-slate-800 grid grid-cols-7 items-center p-2 mb-10 shadow-md shadow-black">
 
     <!-- logo -->
-        <div class="
-                lg:size-15
-                md:size-15
-                sm:size-15
-                size-10">
+        <div class="size-10">
             <a href="index.html">
                 <img
                 src="../img/logo.webp"
@@ -42,9 +41,17 @@
         <div class="col-span-4 col-start-3">
             <input
             type="text"
-            class="bg-slate-500 p-2 w-full texto text-2xl"
+            class="bg-slate-500 p-2 w-full texto text-2xl rounded-lg"
             id="buscador"
-            placeholder="Buscar...">
+            placeholder="Buscar o borrar por Id...">
+        </div>
+
+        <div
+            class="p-2 text-3xl"
+            id="boton_buscar">
+            <a href="#">
+                <span class="material-symbols-outlined">search</span>
+            </a>
         </div>
 
     <!-- carrito de compras y perfil -->
@@ -53,11 +60,7 @@
                 <img
                 src="../img/carrito.webp"
                 alt="logo carrito de compras"
-                class="
-                    lg:size-15 lg:mx-5
-                    md:size-15
-                    sm:size-15
-                    size-10">
+                class="lg:mx-5 size-10">
             </a>
 
             <a
@@ -66,11 +69,7 @@
                 <img
                 src="../img/user-icon.webp"
                 alt="icono de usuario"
-                class="
-                    lg:size-15
-                    md:size-15
-                    sm:size-15
-                    size-10">
+                class="size-10">
             </a>
         </div>
 
@@ -78,37 +77,124 @@
 
 
 
-    <main>
+    <main class="mb-10">
 
-        <h1 class="text-center pt-10 text-4xl titulo mt-10 mb-20">Titulo de la pagina</h1>
+        <section class="grid grid-cols-12 grid-rows-5 gap-2 mb-10
+                    sm:ml-5 sm:grid-rows-3">
+
+            <input
+                id="id_item"
+                type="text"
+                placeholder="Id..."
+                class="
+                    bg-slate-700 rounded p-2
+                    
+                    col-start-2 col-span-5
+                    sm:col-start-1 sm:col-span-3">
+
+            <input
+                id="titulo_item"
+                type="text"
+                placeholder="Titulo..."
+                class="
+                    bg-slate-700 rounded p-2
+
+                    col-start-7 col-span-5
+                    sm:col-start-4 sm:col-span-3">
+
+            <select
+                id="disponible_item"
+                class="
+                    bg-slate-700 rounded p-2
+
+                    col-start-2 col-span-5
+                    sm:col-start-1 sm:col-span-3">
+                <option value="true">Disponible</option>
+                <option value="false">No disponible</option>
+            </select>
+
+            <input
+                id="precio_item"
+                type="text"
+                placeholder="Precio..."
+                class="
+                    bg-slate-700 rounded p-2
+                    
+                    col-start-7 col-span-5
+                    sm:col-start-4 sm:col-span-3 sm:row-span-1">
+
+            <textarea
+                id="descripcion_item"
+                type="text"
+                placeholder="Descripcion..."
+                class="
+                    bg-slate-700 rounded p-2
+                    
+                    col-start-2 col-span-10 row-span-3
+                    sm:col-start-1 sm:col-span-6 sm:row-span-2"
+            ></textarea>
 
 
-
-        <section class="grid grid-cols-11 grid-rows-4">
 
             <button
-            id="boton-database-completa"
-            onclick="ObtenerArticulos()"
-            class="
-                bg-red-900 p-5 texto m-2 text-2xl shadow-xl shadow-black
-                hover:bg-red-800 hover:shadow-2xl
+                id="boton_database_completa"
+                class="
+                    bg-red-900 texto p-2 m-1 text-lg shadow-xl shadow-black rounded-lg
+                    hover:bg-red-800 hover:shadow-2xl
 
-                col-start-5 col-span-3 row-start-1 row-span-2
-                lg:text-4xl lg:col-start-2 lg:col-span-2 lg:row-start-2
-                md:col-start-5 md:col-span-3 md:text-5xl
-                sm:col-start-5 sm:col-span-3 sm:text-4xl">
-            obtener database</button>
+                    col-start-1 col-span-3 ml-5
+                    sm:text-2xl sm:col-start-7 sm:row-start-1"
+            >obtener database</button>
+                    
+            <button
+                id="boton_post"
+                class="
+                    bg-red-900 texto p-2 m-1 text-lg shadow-xl shadow-black rounded-lg
+                    hover:bg-red-800 hover:shadow-2xl
+
+                    col-start-4 col-span-3
+                    sm:text-2xl sm:col-start-10 sm:row-start-1 sm:mr-5"
+            >postear item</button>
+                    
+            <button
+                id="boton_put"
+                class="
+                    bg-red-900 texto p-2 m-1 text-lg shadow-xl shadow-black rounded-lg
+                    hover:bg-red-800 hover:shadow-2xl
+
+                    col-start-7 col-span-3
+                    sm:text-2xl sm:col-start-7 sm:row-start-2 sm:ml-5"
+            >modificar item</button>
+                    
+            <button
+                id="boton_delete"
+                class="
+                    bg-red-900 p-2 texto m-1 text-lg shadow-xl shadow-black rounded-lg py-8
+                    hover:bg-red-800 hover:shadow-2xl
+
+                    col-start-10 col-span-3 mr-5
+                    sm:text-2xl sm:col-start-10 sm:row-start-2 sm:py-10"
+            >borrar item</button>
+                    
+        </section>
+
+
+
+        <section class="grid grid-cols-12">
 
             <div
-            id="contenedor-database-completa"
-            class="bg-slate-800
+                id="contenedor_resultados"
+                class="
+                    bg-slate-800 p-2 rounded-lg
 
-            col-start-2 col-span-9 row-span-2
-            lg:col-start-5 lg:col-span-6 lg:row-start-1 lg:row-span-4
-            md:row-start-3 md:row-span-2
-            sm:"></div>
+                    col-start-2 col-span-10
+                    lg:col-start-5 lg:col-span-6 lg:row-start-1 lg:row-span-4
+                    md:row-start-3 md:row-span-2
+                    sm:row-start-1">
+            </div>
 
         </section>
+
     </main>
 
     <script src="../js/main.js"></script>
