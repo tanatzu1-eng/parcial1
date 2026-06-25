@@ -45,7 +45,7 @@ def crear_articulo(articulo_nuevo: ArticuloSchema):
         if articulo["id"] == articulo_nuevo.id:
             raise HTTPException(status_code=409)
 
-        if articulo["titulo"] == articulo_nuevo["titulo"]:
+        if articulo["titulo"] == articulo_nuevo.titulo:
             raise HTTPException(status_code=409)
 
     base_de_datos.append(articulo_nuevo.model_dump())
@@ -54,7 +54,7 @@ def crear_articulo(articulo_nuevo: ArticuloSchema):
 
 
 @router.put("/base_de_datos/{id}", response_model=ArticuloSchema, responses=NOT_FOUND_RESPONSE)
-def actualizar_articulo(id: ID, articulo_nuevo: ArticuloUpdateSchema):
+def actualizar_articulo(id: ID, articulo_nuevo: ArticuloSchema):
 
     for articulo in base_de_datos:
         if id == articulo["id"]:
