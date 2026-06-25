@@ -67,8 +67,8 @@ def actualizar_articulo(id: ID, articulo_nuevo: ArticuloSchema):
 
 @router.delete("/base_de_datos/{id}", response_model=ArticuloSchema, responses=NOT_FOUND_RESPONSE)
 def eliminar_articulo(id: ID):
-#logico: Annotated[bool, Query(description="NO borrar permanentemente?")]
     '''
+# logico: Annotated[bool, Query(description="NO borrar permanentemente?")]
     for articulo in base_de_datos:
         if id == articulo["id"]:
             if logico:
