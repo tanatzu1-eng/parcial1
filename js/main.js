@@ -50,7 +50,7 @@ function get_database(){
 
 
         } catch (error) {
-            contenedor_resultados.innerHTML = "Error";
+            contenedor_resultados.innerHTML = "Error obteniendo items de database";
         }
     });
 }
@@ -75,7 +75,7 @@ function get_item(){
             const respuesta = await fetch(`http://127.0.0.1:8000/base_de_datos/${buscador.value}`, {
                 method: "GET"
             });
-            
+
 
             if (!respuesta.ok) {
                 contenedor_resultados.innerHTML =
@@ -95,7 +95,7 @@ function get_item(){
 
 
         } catch (error) {
-            contenedor_resultados.innerHTML = "Error";
+            contenedor_resultados.innerHTML = "Error obteniendo items de database";
         }
     });
 }
@@ -106,12 +106,12 @@ get_item();
 
 
 // ================================================================================================================================================
-// POST ITEM: (falla si agrego un item cuyo id ya esta asignado a otro item, da error en consola pero igual imprime la salida default)
+// POST ITEM:
 // ================================================================================================================================================
 function post_item(){
     boton_post.addEventListener("click", async () => {
         try {
-            const datos = {
+            const salida = {
                 id: id_item.value,
                 titulo: titulo_item.value,
                 disponible: disponible_item.value,
@@ -122,33 +122,32 @@ function post_item(){
             const respuesta = await fetch(`http://127.0.0.1:8000/base_de_datos/${id_item.value}`, {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
-                body: JSON.stringify(datos)
+                body: JSON.stringify(salida)
             });
 
-            // error 409 id (conflicto de datos)
-            //
 
-            // error 409 titulo (conflicto de datos)
-            //
+            if (respuesta.status === 409) {
+                contenedor_resultados.innerHTML = "Conflicto: el ID o el título ya existen";
+                return;
+            }
 
             if (!respuesta.ok) {
-                contenedor_resultados.innerHTML =
-                    "faltan datos";
+                contenedor_resultados.innerHTML = "faltan datos";
                 return;
             }
 
 
             contenedor_resultados.innerHTML =
                 `Item agregado:<br>
-                - Id: ${datos.id}<br>
-                - Titulo: ${datos.titulo}<br>
-                - Disponible: ${datos.disponible}<br>
-                - Precio: ${datos.precio}<br>
-                - Descripcion: ${datos.descripcion}`;
+                - Id: ${salida.id}<br>
+                - Titulo: ${salida.titulo}<br>
+                - Disponible: ${salida.disponible}<br>
+                - Precio: ${salida.precio}<br>
+                - Descripcion: ${salida.descripcion}`;
 
 
         } catch (error) {
-            contenedor_resultados.innerHTML = "Error";
+            contenedor_resultados.innerHTML = "Error obteniendo datos de database";
         }
     });
 }
@@ -177,27 +176,23 @@ boton_put.addEventListener("click", async () => {
             body: JSON.stringify(datos)
         });
 
-        // condicion precio > 0
+        // condicion precio > 0 (olvide hacerlo en python asi que va aca)
         if (Number(precio_item.value) === 0) {
-            contenedor_resultados.innerHTML =
-                "no puede ser gratis, ponele precio"
+            contenedor_resultados.innerHTML = "no puede ser gratis, ponele precio"
             return
         }
 
-        // condicion nombre > 2 digitos
+        // condicion nombre > 2 digitos (olvide hacerlo en python asi que va aca)
                 if (titulo_item.value === "") {
-            contenedor_resultados.innerHTML =
-                "tiene que tener nombre"
+            contenedor_resultados.innerHTML = "tiene que tener nombre"
             return
         }
 
         // condicion item debe existir
         if (!respuesta.ok) {
-            contenedor_resultados.innerHTML =
-                `el id ${id_item.value} no coincide con ningun item`;
+            contenedor_resultados.innerHTML = `el id ${id_item.value} no coincide con ningun item`;
             return;
         }
-
 
 
         contenedor_resultados.innerHTML =
@@ -209,7 +204,7 @@ boton_put.addEventListener("click", async () => {
 
 
     } catch (error) {
-        contenedor_resultados.innerHTML = "Error";
+        contenedor_resultados.innerHTML = "Error obteniendo items de database";
     }
 });
 // ================================================================================================================================================
@@ -220,7 +215,13 @@ boton_put.addEventListener("click", async () => {
 // DELETE ITEM:
 // ================================================================================================================================================
 boton_delete.addEventListener("click", async () => {
-    try {            
+    try {
+        if (!buscador.value.trim()) {
+                contenedor_resultados.innerHTML =
+                "no ingresaste ningun id (-_-)";
+            return;
+        }
+
         const respuesta = await fetch(`http://127.0.0.1:8000/base_de_datos/${buscador.value}`, {
             method: "DELETE"
         });
@@ -243,7 +244,7 @@ boton_delete.addEventListener("click", async () => {
         delete datos
 
     } catch (error) {
-        contenedor_resultados.innerHTML = "Error"
+        contenedor_resultados.innerHTML = "Error obteniendo items de database"
     }
 });
 // ================================================================================================================================================
