@@ -234,13 +234,7 @@ boton_delete.addEventListener("click", async () => {
         const datos = await respuesta.json();
 
 
-        contenedor_resultados.innerHTML =
-            `se borro el item:<br>
-            id: ${id_item.value}<br>
-            titulo: ${titulo_item.value}<br>
-            disponible: ${disponible_item.value}<br>
-            precio: ${precio_item.value}<br>
-            descripcion: ${descripcion_item.value}<br><br>`
+        contenedor_resultados.innerHTML = "se borro el item"
         delete datos
 
     } catch (error) {
