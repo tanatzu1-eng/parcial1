@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (carrito.length === 0) {
         if (contenedorCarrito) {
-            contenedorCarrito.innerHTML = `<p class="text-2xl text-center p-10">Tu carrito está vacío 🛒</p>`;
+            contenedorCarrito.innerHTML = `<p class="text-2xl text-center p-10">Tu carrito está vacío</p>`;
         }
         return;
     }
@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (botonVaciar) {
         botonVaciar.addEventListener("click", () => {
             localStorage.removeItem("carrito"); // Borra la key completa del almacenamiento local
-            location.reload(); // Recarga la pestaña para que pase por el if de arriba y diga "Tu carrito está vacío"
+            location.reload(); // Recarga la pestaña para que pase por el if de arriba y diga "carrito vacio"
         });
     }
 });
