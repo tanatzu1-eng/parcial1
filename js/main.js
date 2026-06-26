@@ -114,9 +114,9 @@ function post_item(){
             const salida = {
                 id: id_item.value,
                 titulo: titulo_item.value,
-                disponible: disponible_item.value,
+                descripcion: descripcion_item.value,
                 precio: Number(precio_item.value),
-                descripcion: descripcion_item.value
+                disponible: disponible_item.value,
             };
 
             const respuesta = await fetch(`http://127.0.0.1:8000/base_de_datos/${id_item.value}`, {
@@ -125,6 +125,11 @@ function post_item(){
                 body: JSON.stringify(salida)
             });
 
+            // condicion precio > 0 (olvide hacerlo en python asi que va aca)
+            if (Number(precio_item.value) === 0) {
+                contenedor_resultados.innerHTML = "no puede ser gratis, ponele precio"
+                return
+            }
 
             if (respuesta.status === 409) {
                 contenedor_resultados.innerHTML = "Conflicto: el ID o el título ya existen";
