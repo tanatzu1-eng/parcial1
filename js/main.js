@@ -165,53 +165,57 @@ post_item();
 // ================================================================================================================================================
 // PUT ITEM:
 // ================================================================================================================================================
-boton_put.addEventListener("click", async () => {
-    try {
-        const datos = {
-            id: id_item.value,
-            titulo: titulo_item.value,
-            disponible: disponible_item.value,
+function put_item(){
+    boton_put.addEventListener("click", async () => {
+        try {
+            const datos = {
+                id: id_item.value,
+                titulo: titulo_item.value,
+                disponible: disponible_item.value,
             precio: Number(precio_item.value),
             descripcion: descripcion_item.value
-        };
+            };
 
-        const respuesta = await fetch(`http://127.0.0.1:8000/base_de_datos/${id_item.value}`, {
-            method: "PUT",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify(datos)
-        });
+            const respuesta = await fetch(`http://127.0.0.1:8000/base_de_datos/${id_item.value}`, {
+                method: "PUT",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify(datos)
+            });
+        
+            // condicion precio > 0 (olvide hacerlo en python asi que va aca)
+            if (Number(precio_item.value) === 0) {
+                contenedor_resultados.innerHTML = "no puede ser gratis, ponele precio"
+                return
+            }
 
-        // condicion precio > 0 (olvide hacerlo en python asi que va aca)
-        if (Number(precio_item.value) === 0) {
-            contenedor_resultados.innerHTML = "no puede ser gratis, ponele precio"
-            return
+            // condicion nombre > 2 digitos (olvide hacerlo en python asi que va aca)
+            if (titulo_item.value === "") {
+                contenedor_resultados.innerHTML = "tiene que tener nombre"
+                return
+            }
+        
+            // condicion item debe existir
+            if (!respuesta.ok) {
+                contenedor_resultados.innerHTML = `el id ${id_item.value} no coincide con ningun item`;
+                return;
+            }
+        
+        
+            contenedor_resultados.innerHTML =
+                `id: ${id_item.value},<br>
+                titulo: ${titulo_item.value},<br>
+                disponible: ${disponible_item.value},<br>
+                precio: ${precio_item.value},<br>
+                descripcion: ${descripcion_item.value}`
+
+
+        } catch (error) {
+            contenedor_resultados.innerHTML = "Error obteniendo items de database";
         }
+    });
+}
 
-        // condicion nombre > 2 digitos (olvide hacerlo en python asi que va aca)
-                if (titulo_item.value === "") {
-            contenedor_resultados.innerHTML = "tiene que tener nombre"
-            return
-        }
-
-        // condicion item debe existir
-        if (!respuesta.ok) {
-            contenedor_resultados.innerHTML = `el id ${id_item.value} no coincide con ningun item`;
-            return;
-        }
-
-
-        contenedor_resultados.innerHTML =
-            `id: ${id_item.value},<br>
-            titulo: ${titulo_item.value},<br>
-            disponible: ${disponible_item.value},<br>
-            precio: ${precio_item.value},<br>
-            descripcion: ${descripcion_item.value}`
-
-
-    } catch (error) {
-        contenedor_resultados.innerHTML = "Error obteniendo items de database";
-    }
-});
+put_item();
 // ================================================================================================================================================
 
 
@@ -219,33 +223,37 @@ boton_put.addEventListener("click", async () => {
 // ================================================================================================================================================
 // DELETE ITEM:
 // ================================================================================================================================================
-boton_delete.addEventListener("click", async () => {
-    try {
-        if (!buscador.value.trim()) {
+function delete_item(){
+    boton_delete.addEventListener("click", async () => {
+        try {
+            if (!buscador.value.trim()) {
                 contenedor_resultados.innerHTML =
                 "no ingresaste ningun id (-_-)";
             return;
-        }
+            }
 
-        const respuesta = await fetch(`http://127.0.0.1:8000/base_de_datos/${buscador.value}`, {
-            method: "DELETE"
-        });
+            const respuesta = await fetch(`http://127.0.0.1:8000/base_de_datos/${buscador.value}`, {
+                method: "DELETE"
+            });
         
-        if (!respuesta.ok) {
-            contenedor_resultados.innerHTML = `"${buscador.value}" no coincide con ningun item`;
-            return;
+            if (!respuesta.ok) {
+                contenedor_resultados.innerHTML = `"${buscador.value}" no coincide con ningun item`;
+                return;
+            }
+
+            const datos = await respuesta.json();
+
+
+            contenedor_resultados.innerHTML = "se borro el item"
+            delete datos
+        
+        } catch (error) {
+            contenedor_resultados.innerHTML = "Error obteniendo items de database"
         }
+    });
+}
 
-        const datos = await respuesta.json();
-
-
-        contenedor_resultados.innerHTML = "se borro el item"
-        delete datos
-
-    } catch (error) {
-        contenedor_resultados.innerHTML = "Error obteniendo items de database"
-    }
-});
+delete_item();
 // ================================================================================================================================================
 
 
