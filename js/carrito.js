@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     const contenedorCarrito = document.querySelector(".carrito");
-    const carrito = JSON.parse(localStorage.getItem("carrito"));
+    const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
     if (carrito.length === 0) {
         if (contenedorCarrito) {
@@ -51,8 +51,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const botonVaciar = document.getElementById("vaciar-carrito");
     if (botonVaciar) {
         botonVaciar.addEventListener("click", () => {
-            localStorage.removeItem("carrito"); // Borra la key completa del almacenamiento local
-            location.reload(); // Recarga la pestaña para que pase por el if de arriba y diga "carrito vacio"
+            localStorage.removeItem("carrito"); 
+            location.reload(); 
         });
     }
 });

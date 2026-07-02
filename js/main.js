@@ -41,11 +41,19 @@ function get_database(){
 
             for (let item of datos){
                 contenedor_resultados.innerHTML +=
-                `- id: ${item.id}<br>
-                - titulo: ${item.titulo}<br>
-                - disponible: ${item.disponible}<br>
-                - precio: ${item.precio}<br>
-                - descripcion: ${item.descripcion}<br><br>`;
+                `<div class="border-b border-slate-700 p-2 mb-2">
+                    
+                    id: ${item.id}<br>
+                    titulo: ${item.titulo}<br>
+                    disponible: ${item.disponible}<br>
+                    precio: $${item.precio}<br>
+                    descripcion: ${item.descripcion}<br>
+                    
+                    <button class="bg-emerald-600 hover:bg-emerald-500 text-white p-1 rounded mt-2 cursor-pointer" 
+                        onclick="agregarAlCarrito('${item.id}', '${item.titulo}', ${item.precio})">
+                        Agregar al Carrito
+                    </button>
+                </div>`;
             }
 
 
@@ -172,8 +180,8 @@ function put_item(){
                 id: id_item.value,
                 titulo: titulo_item.value,
                 disponible: disponible_item.value,
-            precio: Number(precio_item.value),
-            descripcion: descripcion_item.value
+                precio: Number(precio_item.value),
+                descripcion: descripcion_item.value
             };
 
             const respuesta = await fetch(`http://127.0.0.1:8000/base_de_datos/${id_item.value}`, {
@@ -188,7 +196,7 @@ function put_item(){
                 return
             }
 
-            // condicion nombre > 2 digitos (olvide hacerlo en python asi que va aca)
+            // condicion (nombre) > (0 digitos) (olvide hacerlo en python asi que va aca)
             if (titulo_item.value === "") {
                 contenedor_resultados.innerHTML = "tiene que tener nombre"
                 return
@@ -227,9 +235,8 @@ function delete_item(){
     boton_delete.addEventListener("click", async () => {
         try {
             if (!buscador.value.trim()) {
-                contenedor_resultados.innerHTML =
-                "no ingresaste ningun id (-_-)";
-            return;
+                contenedor_resultados.innerHTML = "no ingresaste ningun id (-_-)";
+                return;
             }
 
             const respuesta = await fetch(`http://127.0.0.1:8000/base_de_datos/${buscador.value}`, {
